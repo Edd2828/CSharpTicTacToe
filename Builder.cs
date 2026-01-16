@@ -73,7 +73,7 @@ class GameController
         Console.WriteLine("Choose column (options are 0,1,2): ");
         int column = Convert.ToInt32(Console.ReadLine());
 
-        if (!(row > 2 || row < 0 || column > 2 || column < 0))
+        if (row > 2 || row < 0 || column > 2 || column < 0)
         {
             Console.WriteLine("Must choose row and column using 0,1,2");
             PlayerChoice();
