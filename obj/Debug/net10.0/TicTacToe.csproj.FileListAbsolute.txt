@@ -12,3 +12,4 @@ C:\Users\ColmerE\GITHUB Projects\CSharpLearning\intermediate\TicTacToe\obj\Debug
 C:\Users\ColmerE\GITHUB Projects\CSharpLearning\intermediate\TicTacToe\obj\Debug\net10.0\TicTacToe.pdb
 C:\Users\ColmerE\GITHUB Projects\CSharpLearning\intermediate\TicTacToe\obj\Debug\net10.0\TicTacToe.genruntimeconfig.cache
 C:\Users\ColmerE\GITHUB Projects\CSharpLearning\intermediate\TicTacToe\obj\Debug\net10.0\ref\TicTacToe.dll
+C:\Users\ColmerE\GITHUB Projects\CSharpLearning\intermediate\TicTacToe\obj\Debug\net10.0\TicTacToe.sourcelink.json

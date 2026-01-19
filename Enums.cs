@@ -7,10 +7,10 @@ enum Marker
     O
 }
 
-enum Player
+enum PlayerType
 {
     computer,
-    player
+    human
 }
 
 enum BoardElement
