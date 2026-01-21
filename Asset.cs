@@ -6,8 +6,6 @@ namespace Asset;
 class Board
 {
     public int[,] config;
-    public Marker playerSymbol = Marker.X;
-    public Marker computerSymbol = Marker.O;
     public Marker emptySlot = Marker.Empty;
 
     public void Initialise()
@@ -51,15 +49,15 @@ class Board
             return $"  {symbol}  ";
         }
     }
-    public void InputValue(PlayerType player, int row, int column)
+    public void InputValue(PlayerType player, Marker symbol, int row, int column)
     {
         if (player == PlayerType.computer)
         {
-            config[row,column] = computerSymbol.GetHashCode();
+            config[row,column] = symbol.GetHashCode();
         }
         else if (player == PlayerType.human)
         {
-            config[row,column] = playerSymbol.GetHashCode();
+            config[row,column] = symbol.GetHashCode();
         }
     }
     public bool CheckSpaceAvailable(int[] chosenPosition)
@@ -74,35 +72,13 @@ class Board
 
         return false;
     }
-    public bool CheckDistinctValues(int[] rowOrColumn)
+    public bool CheckForMatch(int[] rowOrColumn)
     {
-        List<int> itemsToCheck = new List<int>();
 
-        int iterationCount = 0;
+        HashSet<int> removeDuplicates = [.. rowOrColumn];
+        List<int> noDuplicatesRowOrColumn = [.. removeDuplicates];
 
-        foreach (int item in rowOrColumn)
-        {
-            if (item == emptySlot.GetHashCode())
-            {
-                return false;
-            }
-
-            if (iterationCount == 0)
-            {
-                itemsToCheck.Add(item);
-            }
-            else
-            {
-                if (rowOrColumn[iterationCount - 1] != item)
-                {
-                    itemsToCheck.Add(item);
-                }
-            }
-
-            iterationCount++;
-        }
-
-        if (itemsToCheck.Count == 1)
+        if (noDuplicatesRowOrColumn.Count == 1 && noDuplicatesRowOrColumn[0] != Marker.Empty.GetHashCode())
         {
             return true;
         }
@@ -125,11 +101,50 @@ class Board
                     rowCollection[column] = config[column, row];
                 }
             }
-            if (CheckDistinctValues(rowCollection))
+            if (CheckForMatch(rowCollection))
             {
                 return true;
             }
         }
+        return false;
+    }
+
+    public bool CheckWinCondition()
+    {
+        // column
+        if (RowColumnChecker(BoardElement.column))
+        {
+            return true;
+        }
+
+        // row
+        if (RowColumnChecker(BoardElement.row))
+        {
+            return true;
+        }
+
+        // diagonals
+        int[] diagonalDownRight = {config[0,0],config[1,1],config[2,2]};
+        int[] diagonalDownLeft = {config[0,2],config[1,1],config[2,0]};
+        if (CheckForMatch(diagonalDownRight) || CheckForMatch(diagonalDownLeft))
+        {
+            return true;
+        }
+
+        int emptySpaceCount = 0;
+        foreach (int item in config)
+        {
+            if (item == Marker.Empty.GetHashCode())
+            {
+                emptySpaceCount++;
+            }
+        }
+        if (emptySpaceCount == 0)
+        {
+            Console.WriteLine("It is a draw");
+            return true;
+        }
+        
         return false;
     }
 }

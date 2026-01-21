@@ -3,41 +3,11 @@ using Enums;
 
 namespace Player;
 
-class Computer
-{
-    PlayerType computer = PlayerType.computer;
-    public Board Turn(Board board)
-    {
-        Console.WriteLine("**");
-        List<int[]> availableSpaces = new List<int[]>();
-
-        for (int row = 0; row < 3; row++)
-        {
-            for (int column = 0; column < 3; column++)
-            {
-                if (board.config[row,column] == Marker.Empty.GetHashCode())
-                {
-                    availableSpaces.Add([row, column]);
-                }
-            }
-        }
-
-        Random rnd = new Random();
-        int numberOfAvailableSpaces = availableSpaces.Count;
-        int randomIntRange = rnd.Next(0, numberOfAvailableSpaces);
-        int rowInput = availableSpaces.ElementAt(randomIntRange)[0];
-        int columnInput = availableSpaces.ElementAt(randomIntRange)[1];
-
-        board.InputValue(computer, rowInput, columnInput);
-        Console.WriteLine("Computer's turn");
-        board.Display();
-        return board;
-    }
-}
 
 class Human
 {
     PlayerType human = PlayerType.human;
+    Marker symbol = Marker.X;
     public int[] PlayerChoice()
     {
         // int[] chosenPosition = new int[2];
@@ -64,7 +34,7 @@ class Human
         bool spaceCheck = board.CheckSpaceAvailable(chosenPosition);
         if (spaceCheck)
         {
-            board.InputValue(human, chosenPosition[0], chosenPosition[1]);
+            board.InputValue(human, symbol, chosenPosition[0], chosenPosition[1]);
             board.Display();
         }
         else
